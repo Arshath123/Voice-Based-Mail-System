@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>{{pageTitle}}</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <!--===============================================================================================-->
+  <link rel="icon" type="image/png" href="/mailPage/images/icons/favicon.ico" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/mailPage/vendor/bootstrap/css/bootstrap.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/mailPage/fonts/font-awesome-4.7.0/css/font-awesome.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/mailPage/fonts/Linearicons-Free-v1.0.0/icon-font.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/mailPage/vendor/animate/animate.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/mailPage/vendor/css-hamburgers/hamburgers.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/mailPage/vendor/animsition/css/animsition.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/mailPage/vendor/select2/select2.min.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/mailPage/vendor/daterangepicker/daterangepicker.css" />
+  <!--===============================================================================================-->
+  <link rel="stylesheet" type="text/css" href="/mailPage/css/util.css" />
+  <link rel="stylesheet" type="text/css" href="/mailPage/css/main.css" />
+  <!--===============================================================================================-->
+</head>
+
+<body>
+  <div class="container-contact100">
+
+    <button class="contact100-btn-show">
+      <i class="fa fa-envelope-o" aria-hidden="true"></i>
+    </button>
+    <form action="/gmail-signin" method="get">
+      <button class="contact100-btn-hide m-5">
+        <i class="fa fa-close" aria-hidden="true"></i>
+      </button>
+    </form>
+
+    <div class="wrap-contact100">
+      <form class="contact100-form validate-form" action="/sendmail" method="POST">
+        <div class="wrap-input100 rs1-wrap-input100 validate-input" data-validate="Valid email is required: ex@abc.xyz">
+          <span class="label-input100">Email To</span>
+          <input class="input100" type="text" name="to_mail" placeholder="To:" />
+          <span class="focus-input100"></span>
+        </div>
+
+        <div class="wrap-input100 validate-input" data-validate="Message is required">
+          <span class="label-input100">Message</span>
+          <textarea id="textbox" class="input100" placeholder="Your message here..." name="content"></textarea>
+          <span class="focus-input100"></span>
+        </div>
+        <div class="container-contact100-form-btn m-1">
+          <button class="contact100-form-btn">
+            <span>
+              Submit
+              <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+            </span>
+          </button>
+        </div>
+      </form>
+      <div class="container-contact100-form-btn">
+        <button id="start" class="contact100-form-btn m-1">
+          <span>
+            Start
+            <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+      <div class="container-contact100-form-btn m-1">
+        <button id="stop" class="contact100-form-btn">
+          <span>
+            Stop
+            <i class="fa fa-long-arrow-right m-l-7" aria-hidden="true"></i>
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div id="dropDownSelect1"></div>
+  <script>
+    var message = document.querySelector("#textbox");
+    var SpeechRecognition = SpeechRecognition || webkitSpeechRecognition;
+    var SpeechGrammarList = SpeechGrammarList || webkitSpeechGrammarList;
+
+    var grammer = "#JSGF V1.0";
+
+    var recognition = new SpeechRecognition();
+    var speechRecognitionList = new SpeechGrammarList();
+    speechRecognitionList.addFromString(grammer, 1);
+
+    recognition.grammars = speechRecognitionList;
+    recognition.lang = "en-US";
+    recognition.interimResults = false;
+
+    recognition.onresult = function (event) {
+      var last = event.results.length - 1;
+      var voice = event.results[last][0].transcript;
+      if (message.textContent.length !== 0)
+        message.textContent += ". " + voice;
+      else message.textContent = voice;
+      console.log(voice);
+    };
+
+    document.querySelector("#start").addEventListener("click", () => {
+      recognition.start();
+      console.log("Started")
+    });
+
+    document.querySelector("#stop").addEventListener("click", () => {
+      recognition.stop();
+      message.textContent = ""
+    });
+
+    recognition.onerror = function (event) {
+      alert("Re Record")
+    };
+  </script>
+  <!--===============================================================================================-->
+  <script src="/mailPage/vendor/jquery/jquery-3.2.1.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="/mailPage/vendor/animsition/js/animsition.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="/mailPage/vendor/bootstrap/js/popper.js"></script>
+  <script src="/mailPage/vendor/bootstrap/js/bootstrap.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="/mailPage/vendor/select2/select2.min.js"></script>
+  <!--===============================================================================================-->
+  <script src="/mailPage/vendor/daterangepicker/moment.min.js"></script>
+  <script src="/mailPage/vendor/daterangepicker/daterangepicker.js"></script>
+  <!--===============================================================================================-->
+  <script src="/mailPage/vendor/countdowntime/countdowntime.js"></script>
+  <!--===============================================================================================-->
+  <script src="/mailPage/https://maps.googleapis.com/maps/api/js?key=AIzaSyAKFWBqlKAGCeS1rMVoaNlwyayu0e0YRes"></script>
+  <script src="/mailPage/js/map-custom.js"></script>
+  <!--===============================================================================================-->
+  <script src="/mailPage/js/main.js"></script>
+
+</body>
+
+</html>
